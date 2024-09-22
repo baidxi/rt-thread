@@ -10,8 +10,15 @@ static rt_err_t sun8i_r528_gpio_request(rt_device_t dev)
 {
     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
     rt_uint32_t cfg_val;
+    rt_uint32_t val;
 
     cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
+
+    val = cfg_val & (0xf << (desc->pin * 4));
+    
+    if (val != 0xf) {
+        return -RT_EBUSY;
+    }
 
     cfg_val &= ~(0xf << (desc->pin * 4));
     cfg_val |= desc->dir << (desc->pin * 4);
