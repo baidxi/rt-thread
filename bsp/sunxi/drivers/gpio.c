@@ -89,7 +89,7 @@ int gpio_direct_output(struct gpio_desc *desc, int val)
 
     gpio = rt_container_of(desc->parent, struct gpio_device, parent);
 
-    return gpio->ops->direct_output(&desc->dev, val);
+    return gpio->ops->direction_output(&desc->dev, val);
 }
 
 int gpio_direct_input(struct gpio_desc *desc)
@@ -101,11 +101,20 @@ int gpio_direct_input(struct gpio_desc *desc)
 
     gpio = rt_container_of(desc->parent, struct gpio_device, parent);
 
-    return gpio->ops->direct_input(&desc->dev);
+    return gpio->ops->direction_input(&desc->dev);
 }
 
 void gpio_release(struct gpio_desc *desc)
 {
+    struct gpio_device *gpio;
+
+    if (!desc)
+        return;
+
+    gpio = rt_container_of(desc->parent, struct gpio_device, parent);
+
+    gpio->ops->release(&desc->dev);
+    
     rt_device_unregister(&desc->dev);
     rt_free(desc);
 }

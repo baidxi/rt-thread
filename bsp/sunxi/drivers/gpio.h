@@ -5,8 +5,8 @@
 #include <rtthread.h>
 
 enum gpio_dir {
-    GPIO_OUTPUT,
     GPIO_INPUT,
+    GPIO_OUTPUT,
 };
 
 enum gpio_group {
