@@ -15,8 +15,8 @@ rt_err_t gpio_controller_register(const struct gpio_ops *ops, const char *name)
     struct gpio_device *dev;
     int ret;
 
-    if (!ops->direct_input ||
-        !ops->direct_output ||
+    if (!ops->direction_input ||
+        !ops->direction_output ||
         !ops->init ||
         !ops->release ||
         !ops->request)
@@ -89,7 +89,7 @@ int gpio_direct_output(struct gpio_desc *desc, int val)
 
     gpio = rt_container_of(desc->parent, struct gpio_device, parent);
 
-    return gpio->ops->direct_output(desc, val);
+    return gpio->ops->direct_output(&desc->dev, val);
 }
 
 int gpio_direct_input(struct gpio_desc *desc)
@@ -101,7 +101,7 @@ int gpio_direct_input(struct gpio_desc *desc)
 
     gpio = rt_container_of(desc->parent, struct gpio_device, parent);
 
-    return gpio->ops->direct_input(desc);
+    return gpio->ops->direct_input(&desc->dev);
 }
 
 void gpio_release(struct gpio_desc *desc)

@@ -44,9 +44,9 @@ struct gpio_desc {
 
 struct gpio_ops {
     rt_err_t (*request)(rt_device_t dev);
-    int (*direct_output)(struct gpio_desc *desc, int val);
-    int (*direct_input)(struct gpio_desc *desc);
-    void (*release)(struct gpio_desc *desc);
+    rt_err_t (*direction_output)(rt_device_t dev, int val);
+    int (*direction_input)(rt_device_t dev);
+    void (*release)(rt_device_t dev);
     rt_err_t (*init)(struct rt_device *dev);
 };
 
