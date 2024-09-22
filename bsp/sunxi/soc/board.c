@@ -2,6 +2,7 @@
 #include <rtthread.h>
 
 #include "board.h"
+#include "device.h"
 
 #include <mmu.h>
 
@@ -28,6 +29,8 @@ void rt_hw_board_init(void)
     rt_hw_interrupt_init();
     /* initialize system heap */
     rt_system_heap_init(HEAP_BEGIN, HEAP_END);
+
+
 
     rt_components_board_init();
     rt_console_set_device(RT_CONSOLE_DEVICE_NAME);

@@ -1,10 +1,19 @@
 from building import *
 
 cwd  = GetCurrentDir()
-src  = Glob('*.c')
+src  = Split('''
+gpio.c
+''')
 list = os.listdir(cwd)
 CPPPATH = [cwd]
 objs = []
+
+if GetDepend('SOC_ALLWINNER_R528'):
+    src += ['sun8i_r528_pinctrl.c'];
+    src += ['sun8i_r528_clock.c'];
+    src += ['sun8i_r528_gpio.c'];
+    if GetDepend('RT_USING_UART'):
+        src += ['sun8i_r528_uart.c']
 
 group = DefineGroup('Drivers', src, depend = [''], CPPPATH = CPPPATH)
 
