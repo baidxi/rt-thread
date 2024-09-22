@@ -11,12 +11,12 @@ static rt_err_t sun8i_r528_gpio_request(rt_device_t dev)
     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
     rt_uint32_t cfg_val;
 
-    cfg_val = readl(GPIO_BASE + desc->group * 0x30);
+    cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
 
     cfg_val &= ~(0xf << (desc->pin * 4));
     cfg_val |= desc->dir << (desc->pin * 4);
 
-    writel(cfg_val, GPIO_BASE + desc->group * 0x30);
+    writel(cfg_val, GPIO_BASE + GPIO_CFG(desc->group, 0));
 
     return RT_EOK;
 }
@@ -27,12 +27,12 @@ static rt_err_t sun8i_r528_gpio_direction_output(rt_device_t dev, int val)
     rt_uint32_t v;
     rt_uint32_t tv = !!val;
 
-    v = readl(GPIO_BASE + desc->group * 0x30 + 0x10);
+    v = readl(GPIO_BASE + GPIO_DAT(desc->group));
 
     v &= ~(1 << desc->pin);
     v |= tv << desc->pin;
 
-    writel(v, GPIO_BASE + desc->group * 0x30 + 0x10);
+    writel(v, GPIO_BASE + GPIO_DAT(desc->group));
 
     return RT_EOK;
 }
@@ -42,7 +42,7 @@ static int sun8i_r528_gpio_direction_input(rt_device_t dev)
     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
     rt_uint32_t val;
 
-    val = readl(GPIO_BASE + desc->group * 0x30 + 0x10) & (1 << desc->pin);
+    val = readl(GPIO_BASE + GPIO_DAT(desc->group)) & (1 << desc->pin);
 
     return val;
 }
@@ -50,13 +50,13 @@ static int sun8i_r528_gpio_direction_input(rt_device_t dev)
 static void sun8i_r528_gpio_release(rt_device_t dev)
 {
     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
-    rt_uint32_t val;
+    rt_uint32_t cfg_val;
 
-    val = readl(GPIO_BASE + desc->group * 0x30);
+    cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
 
-    val |= 0xf << (desc->pin * 4);
+    cfg_val |= 0xf << (desc->pin * 4);
 
-    writel(val, GPIO_BASE + desc->group * 0x30);
+    writel(cfg_val, GPIO_BASE + GPIO_CFG(desc->group, 0));
 }
 
 static rt_err_t sun8i_r528_gpio_controller_init(rt_device_t dev)
