@@ -4,23 +4,58 @@
 #include <rtconfig.h>
 #include <rtthread.h>
 
+enum gpio_dir {
+    GPIO_OUTPUT,
+    GPIO_INPUT,
+};
+
+enum gpio_group {
+    GPIOA,
+    GPIOB,
+    GPIOC,
+    GPIOD,
+    GPIOE,
+    GPIOF,
+    GPIOG,
+    GPIOH,
+    GPIOI,
+    GPIOJ,
+    GPIOK,
+};
+
+enum gpio_pin {
+    GPIO_PIN_0,
+    GPIO_PIN_1,
+    GPIO_PIN_2,
+    GPIO_PIN_3,
+    GPIO_PIN_4,
+    GPIO_PIN_5,
+    GPIO_PIN_6,
+    GPIO_PIN_7,
+};
+
 struct gpio_desc {
-    char name[32];
+    enum gpio_pin pin;
+    enum gpio_group group;
+    enum gpio_dir dir;
+    rt_device_t parent;
+    struct rt_device dev;
 };
 
 struct gpio_ops {
-    const struct gpio_desc *(*request)(rt_uint32_t pin, const char *name);
-    int (*direct_output)(const struct gpio_desc *desc, int val);
-    int (*direct_input)(const struct gpio_desc *desc);
-    void (*release)(const struct gpio_desc *desc);
+    rt_err_t (*request)(rt_device_t dev);
+    int (*direct_output)(struct gpio_desc *desc, int val);
+    int (*direct_input)(struct gpio_desc *desc);
+    void (*release)(struct gpio_desc *desc);
+    rt_err_t (*init)(struct rt_device *dev);
 };
 
-int gpio_controller_register(const struct gpio_ops *ops, const char *name);
+rt_err_t gpio_controller_register(const struct gpio_ops *ops, const char *name);
 
-const struct gpio_desc *gpio_request(rt_uint32_t pin, const char *name);
-int gpio_direct_output(const struct gpio_desc *desc, int val);
-int gpio_direct_input(const struct gpio_desc *desc);
-void gpio_release(const struct gpio_desc *desc);
+struct gpio_desc *gpio_request(rt_device_t dev,enum gpio_group group, enum gpio_pin pin,  enum gpio_dir dir, const char *name);
+int gpio_direct_output(struct gpio_desc *desc, int val);
+int gpio_direct_input(struct gpio_desc *desc);
+void gpio_release(struct gpio_desc *desc);
 
 #ifdef SOC_ALLWINNER_R528
 #include "sun8i_r528_gpio.h"
