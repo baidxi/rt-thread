@@ -340,6 +340,7 @@
 /* Onboard Peripheral Drivers */
 
 #define RT_USING_UART3
+#define RT_USING_UART
 /* end of Onboard Peripheral Drivers */
 
 /* Hardware Config */
