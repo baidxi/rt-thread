@@ -3,10 +3,10 @@
 #include <rtdevice.h>
 #include <rtconfig.h>
 
-#include "device.h"
-#include "clock.h"
+#include "sunxi_device.h"
+#include "sunxi_clock.h"
 
-#include "uart.h"
+#include "sunxi_uart.h"
 
 #define UART_THR    0x0000
 #define UART_RBR    0x0000

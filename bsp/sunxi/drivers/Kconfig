@@ -1,26 +1,47 @@
 menu "Onboard Peripheral Drivers"
 
+menu "Serial device"
+
 config RT_USING_UART0
     bool "Enable UART0"
+    select RT_USING_SERIAL
     default y
 
 config RT_USING_UART1
     bool "Enable UART1"
+    select RT_USING_SERIAL
 
 config RT_USING_UART2
     bool "Enable UART2"
+    select RT_USING_SERIAL
 
 config RT_USING_UART3
     bool "Enable UART3"
+    select RT_USING_SERIAL
 
 config RT_USING_UART4
     bool "Enable UART4"
+    select RT_USING_SERIAL
 
 config RT_USING_UART5
     bool "Enable UART5"
+    select RT_USING_SERIAL
+endmenu
 
-config RT_USING_UART
-    bool
-    default y if RT_USING_UART0 || RT_USING_UART1 || RT_USING_UART2 || RT_USING_UART3 || RT_USING_UART4 || RT_USING_UART5
+menu "SDHCI Controller"
+
+config RT_USING_SDHCI0
+    bool "Enable SDHCI0"
+    select RT_USING_SDIO
+
+config RT_USING_SDHCI1
+    bool "Enable SDHCI1"
+    select RT_USING_SDIO
+
+config RT_USING_SDHCI2
+    bool "Enable SDHCI2"
+    select RT_USING_SDIO
+
+endmenu
 
 endmenu

@@ -2,8 +2,8 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#include "device.h"
-#include "clock.h"
+#include "sunxi_device.h"
+#include "sunxi_clock.h"
 
 
 void clock_reset(rt_uint8_t clock)

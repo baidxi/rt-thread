@@ -2,8 +2,8 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#include "gpio.h"
-#include "device.h"
+#include "sunxi_gpio.h"
+#include "sunxi_device.h"
 
 
 static rt_err_t sun8i_r528_gpio_request(rt_device_t dev)

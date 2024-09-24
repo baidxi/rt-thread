@@ -1,10 +1,9 @@
 #include <rthw.h>
 #include <rtthread.h>
+#include <mmu.h>
+#include <rtconfig.h>
 
 #include "board.h"
-#include "device.h"
-
-#include <mmu.h>
 
 struct mem_desc platform_mem_desc[] = {
     {0x00000000, 0xFFFFFFFF, 0x00000000, DEVICE_MEM},
@@ -29,8 +28,6 @@ void rt_hw_board_init(void)
     rt_hw_interrupt_init();
     /* initialize system heap */
     rt_system_heap_init(HEAP_BEGIN, HEAP_END);
-
-
 
     rt_components_board_init();
     rt_console_set_device(RT_CONSOLE_DEVICE_NAME);

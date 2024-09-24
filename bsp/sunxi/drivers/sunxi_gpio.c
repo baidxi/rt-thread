@@ -2,8 +2,7 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#include "gpio.h"
-#include "rtdef.h"
+#include "sunxi_gpio.h"
 
 struct gpio_device {
     struct rt_device parent;

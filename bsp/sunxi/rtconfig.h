@@ -91,6 +91,12 @@
 #define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_PIN
+#define RT_USING_SDIO
+#define RT_SDIO_STACK_SIZE 512
+#define RT_SDIO_THREAD_PRIORITY 15
+#define RT_MMCSD_STACK_SIZE 1024
+#define RT_MMCSD_THREAD_PREORITY 22
+#define RT_MMCSD_MAX_PARTITION 16
 
 /* Using USB */
 
@@ -305,13 +311,20 @@
 
 /* Onboard Peripheral Drivers */
 
+/* Serial device */
+
 #define RT_USING_UART0
-#define RT_USING_UART
+/* end of Serial device */
+
+/* SDHCI Controller */
+
+#define RT_USING_SDHCI0
+/* end of SDHCI Controller */
 /* end of Onboard Peripheral Drivers */
 
-/* Hardware Config */
+/* SoC Config */
 
 #define SOC_ALLWINNER_R528
-/* end of Hardware Config */
+/* end of SoC Config */
 
 #endif
