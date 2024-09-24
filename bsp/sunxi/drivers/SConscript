@@ -1,0 +1,26 @@
+from building import *
+
+cwd  = GetCurrentDir()
+src  = Split('''
+gpio.c
+''')
+list = os.listdir(cwd)
+CPPPATH = [cwd]
+objs = []
+
+if GetDepend('SOC_ALLWINNER_R528'):
+    src += ['sun8i_r528_pinctrl.c'];
+    src += ['sun8i_r528_clock.c'];
+    src += ['sun8i_r528_gpio.c'];
+    if GetDepend('RT_USING_UART'):
+        src += ['sun8i_r528_uart.c']
+
+group = DefineGroup('Drivers', src, depend = [''], CPPPATH = CPPPATH)
+
+for d in list:
+    path = os.path.join(cwd, d)
+    if os.path.isfile(os.path.join(path, 'SConscript')):
+        objs = objs + SConscript(os.path.join(d, 'SConscript'))
+objs = objs + group
+
+Return('objs')
