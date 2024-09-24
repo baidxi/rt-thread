@@ -1,0 +1,26 @@
+menu "Onboard Peripheral Drivers"
+
+config RT_USING_UART0
+    bool "Enable UART0"
+    default y
+
+config RT_USING_UART1
+    bool "Enable UART1"
+
+config RT_USING_UART2
+    bool "Enable UART2"
+
+config RT_USING_UART3
+    bool "Enable UART3"
+
+config RT_USING_UART4
+    bool "Enable UART4"
+
+config RT_USING_UART5
+    bool "Enable UART5"
+
+config RT_USING_UART
+    bool
+    default y if RT_USING_UART0 || RT_USING_UART1 || RT_USING_UART2 || RT_USING_UART3 || RT_USING_UART4 || RT_USING_UART5
+
+endmenu
