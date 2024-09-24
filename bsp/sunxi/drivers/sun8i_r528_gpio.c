@@ -79,9 +79,9 @@ static const struct gpio_ops ops = {
     .init = sun8i_r528_gpio_controller_init,
 };
 
-static int sun8i_r528_gpio_subsys_init(void)
+int sun8i_r528_gpio_subsys_init(void)
 {
     return gpio_controller_register(&ops, "gpio device");
 }
 
-INIT_SUBSYS_EXPORT(sun8i_r528_gpio_subsys_init);
+INIT_BOARD_EXPORT(sun8i_r528_gpio_subsys_init);
