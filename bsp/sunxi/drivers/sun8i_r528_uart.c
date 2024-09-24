@@ -1,9 +1,11 @@
 #include <rthw.h>
 #include <rtthread.h>
 #include <rtdevice.h>
+#include <rtconfig.h>
 
 #include "device.h"
 #include "clock.h"
+
 #include "uart.h"
 
 #define UART_THR    0x0000
@@ -79,12 +81,12 @@ struct serial_device serial_ports[] = {
             .pin = 6,
             .func = 7,
             .group = 1,
-            .pull = 0x1,
         },
         .pinctrl[1] = {
             .pin = 7,
             .func = 7,
             .group = 1,
+            .pull = 0x1,
         },
     },
 #endif
@@ -217,7 +219,13 @@ static int serial_put_c(struct rt_serial_device *serial, char c)
     volatile rt_uint32_t *sbuf;
     volatile rt_uint32_t *sta;
 
+    RT_ASSERT(serial != RT_NULL);
+
     ser_dev = serial->parent.user_data;
+
+    if (!ser_dev->initialized)
+        return 0;
+
     sbuf = (rt_uint32_t *)(ser_dev->base + UART_THR);
     sta = (rt_uint32_t *)(ser_dev->base + UART_USR);
 
@@ -232,9 +240,14 @@ static int serial_get_c(struct rt_serial_device *serial)
     int ch = -1;
     volatile rt_uint32_t *rbuf;
     volatile rt_uint32_t *sta;
-    struct serial_device *ser_dev = serial->parent.user_data;
+    struct serial_device *ser_dev;
 
     RT_ASSERT(serial != RT_NULL);
+
+    ser_dev = serial->parent.user_data;
+
+    if (!ser_dev->initialized)
+        return 0;
 
     rbuf = (rt_uint32_t *)(ser_dev->base + UART_RBR);
     sta = (rt_uint32_t *)(ser_dev->base + UART_USR);
@@ -243,6 +256,7 @@ static int serial_get_c(struct rt_serial_device *serial)
     {
         ch = *rbuf & 0xff;
     }
+
     return ch;
 }
 
@@ -281,6 +295,7 @@ int rt_hw_uart_init(void)
         if (ret) {
             return ret;
         }
+        ser_dev->initialized = RT_TRUE;
     }
 
     return RT_EOK;

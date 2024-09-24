@@ -20,7 +20,7 @@ void sunxi_pinctrl_init(const struct pinctrl *pinctrl)
 
     if (pinctrl->pull) {
         pull_val &= ~(0x3 << (pinctrl->pin * 2));
-        pull_val |= pinctrl->pull << (pinctrl->pull * 2);
+        pull_val |= pinctrl->pull << (pinctrl->pin * 2);
         writel(pull_val, GPIO_BASE + GPIO_PUPD(pinctrl->group));
     }
 }

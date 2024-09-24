@@ -8,10 +8,11 @@
 struct serial_device {
     struct rt_serial_device serial_device;
     char name[RT_NAME_MAX];
-    rt_uint32_t base;
+    unsigned long base;
     int irq;
     const struct pinctrl pinctrl[2];
     int id;
+    rt_bool_t initialized;
 };
 
 

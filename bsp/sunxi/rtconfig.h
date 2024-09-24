@@ -51,7 +51,7 @@
 #define RT_USING_DEVICE
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 128
-#define RT_CONSOLE_DEVICE_NAME "uart3"
+#define RT_CONSOLE_DEVICE_NAME "uart0"
 #define RT_VER_NUM 0x50200
 #define RT_BACKTRACE_LEVEL_MAX_NR 32
 /* end of RT-Thread Kernel */
@@ -339,7 +339,7 @@
 
 /* Onboard Peripheral Drivers */
 
-#define RT_USING_UART3
+#define RT_USING_UART0
 #define RT_USING_UART
 /* end of Onboard Peripheral Drivers */
 
