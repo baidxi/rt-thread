@@ -22,14 +22,14 @@ struct serial_device serial_ports[] = {
         .irq = 34,
         .pinctrl[0] = {
             .pin = 2,
-            .func = 3,
-            .group = 6,
+            .func = 6,
+            .group = 4,
             .pull = 0x1,
         },
         .pinctrl[1] = {
-            .pin = 4,
-            .func = 3,
-            .group = 6,
+            .pin = 3,
+            .func = 6,
+            .group = 4,
         },
     },
 #endif
@@ -168,6 +168,8 @@ static rt_err_t serial_configure(struct rt_serial_device *serial, struct serial_
     int ret;
 
     ser_dev = serial->parent.user_data;
+
+    serial->config = *cfg;
 
     ret = serial_device_init(ser_dev, cfg);
 
