@@ -3,117 +3,106 @@
 #include <rtdevice.h>
 
 #include "sunxi_gpio.h"
+#include "sunxi_device.h"
 
-struct gpio_device {
-    struct rt_device parent;
-    const struct gpio_ops *ops;
+static void sunxi_gpio_pin_mode(struct rt_device *device, rt_base_t pin, rt_base_t mode)
+{
+    struct sunxi_gpio *gpio = device->user_data;
+    rt_uint32_t val;
+    rt_uint32_t bank = pin / 32;
+    rt_uint32_t p = pin % 32;
+
+    switch(mode) {
+        case PIN_MODE_OUTPUT:
+            val = readl(gpio->hw_base + bank * 0x30);
+            val &= ~(0xf << (p * 0x4));
+            val |= 1 << (p * 0x4);
+            writel(val, gpio->hw_base + bank * 0x30);
+            break;
+        case PIN_MODE_INPUT:
+            val = readl(gpio->hw_base + bank * 0x30);
+            val &= ~(0xf << (p * 0x4));
+            writel(val, gpio->hw_base + bank * 0x30);
+            break;
+        case PIN_MODE_INPUT_PULLUP:
+            val = readl(gpio->hw_base + bank * 0x30 + 0x24);
+            val &= ~(0x3 << (p * 0x2));
+            val |= 1 << (p * 0x2);
+            writel(val, gpio->hw_base + bank * 0x30 + 0x24);
+            break;
+        case PIN_MODE_INPUT_PULLDOWN:
+            val = readl(gpio->hw_base + bank * 0x30 + 0x24);
+            val &= ~(0x3 << (p * 0x2));
+            val |= 2 << (p * 0x2);
+            writel(val, gpio->hw_base + bank * 0x30 + 0x24);
+            break;
+    }
+}
+
+static void sunxi_gpio_pin_write(struct rt_device *device, rt_base_t pin, rt_base_t value)
+{
+    struct sunxi_gpio *gpio = device->user_data;
+    rt_uint32_t val;
+    rt_uint32_t bank = pin / 32;
+    rt_uint32_t p = pin % 32;
+
+    val = readl(gpio->hw_base + bank * 0x30 + 0x10);
+    val &= ~(1 << p);
+    val |= 1 << p;
+
+    writel(val, gpio->hw_base + bank * 0x30 + 0x10);
+}
+
+static int sunxi_gpio_pin_read(struct rt_device *device, rt_base_t pin)
+{
+    struct sunxi_gpio *gpio = device->user_data;
+    rt_uint32_t val;
+    rt_uint32_t bank = pin / 32;
+    rt_uint32_t p = pin % 32;
+
+    val = readl(gpio->hw_base + bank * 0x30 + 0x10);
+    return (val & 1 << p);
+}
+
+static rt_err_t sunxi_gpio_pin_attach_irq(struct rt_device *device, rt_int32_t pin,
+                      rt_uint32_t mode, void (*hdr)(void *args), void *args)
+{
+    return RT_EOK;
+}
+
+static rt_err_t sunxi_gpio_pin_detach_irq(struct rt_device *device, rt_int32_t pin)
+{
+    return RT_EOK;
+}
+
+static rt_err_t sunxi_gpio_pin_irq_enable(struct rt_device *device, rt_base_t pin, rt_uint32_t enabled)
+{
+    return RT_EOK;
+}
+
+static rt_base_t sunxi_gpio_pin_get(struct rt_device *device, const char *name)
+{
+    struct sunxi_gpio *gpio = device->user_data;
+
+    char *str_pin = rt_strstr(name, ".") + 1;
+
+    gpio->pin = str_pin[0] - 0x30;
+    gpio->bank = name[1] - 0x41;
+
+    return gpio->invalid_pin(gpio) ? (gpio->bank * 32 + gpio->pin) : -1;
+}
+
+static const struct rt_pin_ops sunxi_gpio_ops = {
+    .pin_mode = sunxi_gpio_pin_mode,
+    .pin_write = sunxi_gpio_pin_write,
+    .pin_read = sunxi_gpio_pin_read,
+    .pin_attach_irq = sunxi_gpio_pin_attach_irq,
+    .pin_detach_irq = sunxi_gpio_pin_detach_irq,
+    .pin_irq_enable = sunxi_gpio_pin_irq_enable,
+    .pin_get = sunxi_gpio_pin_get,
 };
 
-rt_err_t gpio_controller_register(const struct gpio_ops *ops, const char *name)
+int sunxi_gpio_init(struct sunxi_gpio *gpio)
 {
-    struct gpio_device *dev;
-    int ret;
-
-    if (!ops->direction_input ||
-        !ops->direction_output ||
-        !ops->init ||
-        !ops->release ||
-        !ops->request)
-        return -RT_EINVAL;
-
-    dev = rt_malloc(sizeof(*dev));
-    if (!dev)
-        return -RT_ENOMEM;
-
-    dev->parent.init = ops->init;
-
-    ret = rt_device_init(&dev->parent);
-
-    if (ret) {
-        goto init_err;
-    }
-
-    dev->ops = ops;
-
-    ret = rt_device_register(&dev->parent, name, 0);
-
-    if (ret)
-        goto init_err;
-
-    return RT_EOK;
-init_err:
-    rt_free(dev);
-    return ret;
-}
-
-struct gpio_desc *gpio_request(rt_device_t dev,enum gpio_group group, enum gpio_pin pin,  enum gpio_dir dir, const char *name)
-{
-    struct gpio_device *gpio = rt_container_of(dev, struct gpio_device, parent);
-    struct gpio_desc *desc;
-    int ret;
-
-    desc = rt_malloc(sizeof(*desc));
-    if (!desc)
-        return RT_NULL;
-
-    desc->group = group;
-    desc->dir = dir;
-    desc->pin = pin;
-    desc->parent = dev;
-    desc->dev.init = gpio->ops->request;
-
-    ret = rt_device_init(&desc->dev);
-
-    if (ret)
-        goto err;
-
-    ret = rt_device_register(&desc->dev, name, 0);
-
-    if (ret)
-        goto err;
-
-    return desc;
-
-err:
-    rt_free(desc);
-    return RT_NULL;
-}
-
-int gpio_direct_output(struct gpio_desc *desc, int val)
-{
-    struct gpio_device *gpio;
-
-    if (!desc)
-        return -RT_EINVAL;
-
-    gpio = rt_container_of(desc->parent, struct gpio_device, parent);
-
-    return gpio->ops->direction_output(&desc->dev, val);
-}
-
-int gpio_direct_input(struct gpio_desc *desc)
-{
-    struct gpio_device *gpio;
-
-    if (!desc)
-        return -RT_EINVAL;
-
-    gpio = rt_container_of(desc->parent, struct gpio_device, parent);
-
-    return gpio->ops->direction_input(&desc->dev);
-}
-
-void gpio_release(struct gpio_desc *desc)
-{
-    struct gpio_device *gpio;
-
-    if (!desc)
-        return;
-
-    gpio = rt_container_of(desc->parent, struct gpio_device, parent);
-
-    gpio->ops->release(&desc->dev);
-    
-    rt_device_unregister(&desc->dev);
-    rt_free(desc);
+    return rt_device_pin_register("gpio0", &sunxi_gpio_ops, gpio);
 }

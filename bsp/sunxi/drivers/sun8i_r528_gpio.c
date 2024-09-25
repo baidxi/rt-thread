@@ -1,87 +1,105 @@
 #include <rthw.h>
-#include <rtthread.h>
-#include <rtdevice.h>
 
+#include "rtdef.h"
 #include "sunxi_gpio.h"
-#include "sunxi_device.h"
+// static rt_err_t sun8i_r528_gpio_request(rt_device_t dev)
+// {
+//     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
+//     rt_uint32_t cfg_val;
+//     rt_uint32_t val;
 
+//     cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
 
-static rt_err_t sun8i_r528_gpio_request(rt_device_t dev)
-{
-    struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
-    rt_uint32_t cfg_val;
-    rt_uint32_t val;
-
-    cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
-
-    val = cfg_val & (0xf << (desc->pin * 4));
+//     val = cfg_val & (0xf << (desc->pin * 4));
     
-    if (val != 0xf) {
-        return -RT_EBUSY;
-    }
+//     if (val != 0xf) {
+//         return -RT_EBUSY;
+//     }
 
-    cfg_val &= ~(0xf << (desc->pin * 4));
-    cfg_val |= desc->dir << (desc->pin * 4);
+//     cfg_val &= ~(0xf << (desc->pin * 4));
+//     cfg_val |= desc->dir << (desc->pin * 4);
 
-    writel(cfg_val, GPIO_BASE + GPIO_CFG(desc->group, 0));
+//     writel(cfg_val, GPIO_BASE + GPIO_CFG(desc->group, 0));
 
-    return RT_EOK;
-}
+//     return RT_EOK;
+// }
 
-static rt_err_t sun8i_r528_gpio_direction_output(rt_device_t dev, int val)
+// static rt_err_t sun8i_r528_gpio_direction_output(rt_device_t dev, int val)
+// {
+//     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
+//     rt_uint32_t v;
+//     rt_uint32_t tv = !!val;
+
+//     v = readl(GPIO_BASE + GPIO_DAT(desc->group));
+
+//     v &= ~(1 << desc->pin);
+//     v |= tv << desc->pin;
+
+//     writel(v, GPIO_BASE + GPIO_DAT(desc->group));
+
+//     return RT_EOK;
+// }
+
+// static int sun8i_r528_gpio_direction_input(rt_device_t dev)
+// {
+//     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
+//     rt_uint32_t val;
+
+//     val = readl(GPIO_BASE + GPIO_DAT(desc->group)) & (1 << desc->pin);
+
+//     return val;
+// }
+
+// static void sun8i_r528_gpio_release(rt_device_t dev)
+// {
+//     struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
+//     rt_uint32_t cfg_val;
+
+//     cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
+
+//     cfg_val |= 0xf << (desc->pin * 4);
+
+//     writel(cfg_val, GPIO_BASE + GPIO_CFG(desc->group, 0));
+// }
+
+// static rt_err_t sun8i_r528_gpio_controller_init(rt_device_t dev)
+// {
+//     return RT_EOK;
+// }
+
+// static const struct gpio_ops ops = {
+//     .request = sun8i_r528_gpio_request,
+//     .direction_output = sun8i_r528_gpio_direction_output,
+//     .direction_input = sun8i_r528_gpio_direction_input,
+//     .release = sun8i_r528_gpio_release,
+//     .init = sun8i_r528_gpio_controller_init,
+// };
+
+// int sun8i_r528_gpio_subsys_init(void)
+// {
+//     return gpio_controller_register(&ops, "gpio0");
+// }
+
+// INIT_BOARD_EXPORT(sun8i_r528_gpio_subsys_init);
+
+static rt_bool_t sun8i_r528_gpio_invalid(struct sunxi_gpio *gpio)
 {
-    struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
-    rt_uint32_t v;
-    rt_uint32_t tv = !!val;
+    if (gpio->pin > GPIO_PIN_7 || gpio->bank > GPIOG)
+        return RT_FALSE;
 
-    v = readl(GPIO_BASE + GPIO_DAT(desc->group));
+    // gpio->hw_base = 0x02000000 + gpio->bank * 0x30;
 
-    v &= ~(1 << desc->pin);
-    v |= tv << desc->pin;
-
-    writel(v, GPIO_BASE + GPIO_DAT(desc->group));
-
-    return RT_EOK;
+    return RT_TRUE;
 }
 
-static int sun8i_r528_gpio_direction_input(rt_device_t dev)
+static int sun8i_r528_gpio_init(void)
 {
-    struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
-    rt_uint32_t val;
+    static struct sunxi_gpio gpio = {
+        .hw_base = 0x02000000,
+        .invalid_pin = sun8i_r528_gpio_invalid,
+    };
 
-    val = readl(GPIO_BASE + GPIO_DAT(desc->group)) & (1 << desc->pin);
-
-    return val;
+    return sunxi_gpio_init(&gpio);
 }
 
-static void sun8i_r528_gpio_release(rt_device_t dev)
-{
-    struct gpio_desc *desc = rt_container_of(dev, struct gpio_desc, dev);
-    rt_uint32_t cfg_val;
-
-    cfg_val = readl(GPIO_BASE + GPIO_CFG(desc->group, 0));
-
-    cfg_val |= 0xf << (desc->pin * 4);
-
-    writel(cfg_val, GPIO_BASE + GPIO_CFG(desc->group, 0));
-}
-
-static rt_err_t sun8i_r528_gpio_controller_init(rt_device_t dev)
-{
-    return RT_EOK;
-}
-
-static const struct gpio_ops ops = {
-    .request = sun8i_r528_gpio_request,
-    .direction_output = sun8i_r528_gpio_direction_output,
-    .direction_input = sun8i_r528_gpio_direction_input,
-    .release = sun8i_r528_gpio_release,
-    .init = sun8i_r528_gpio_controller_init,
-};
-
-int sun8i_r528_gpio_subsys_init(void)
-{
-    return gpio_controller_register(&ops, "gpio0");
-}
-
-INIT_BOARD_EXPORT(sun8i_r528_gpio_subsys_init);
+INIT_BOARD_EXPORT(sun8i_r528_gpio_init);

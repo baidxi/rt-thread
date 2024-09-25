@@ -12,7 +12,6 @@
 #define SUNXI_SDC_DAT1  3
 #define SUNXI_SDC_DAT2  4
 #define SUNXI_SDC_DAT3  5
-
 struct sunxi_sdhci {
     struct rt_mmcsd_host *host;
     unsigned long hw_base;
@@ -26,6 +25,7 @@ struct sunxi_sdhci {
     #ifdef CONFIG_MMC_USE_DMA
     ALIGN(32) static rt_uint8_t dma_buffer[64 * 1024];
     #endif
+    int irq;
 };
 
 #endif

@@ -5,7 +5,6 @@
 #include "sunxi_device.h"
 #include "sunxi_clock.h"
 
-
 void clock_reset(rt_uint8_t clock)
 {
     rt_uint32_t val = readl(CCU_BASE + UART_BGR_REG);

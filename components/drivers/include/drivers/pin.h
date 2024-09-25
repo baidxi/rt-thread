@@ -71,7 +71,7 @@ struct rt_pin_ops
                       rt_uint32_t mode, void (*hdr)(void *args), void *args);
     rt_err_t (*pin_detach_irq)(struct rt_device *device, rt_int32_t pin);
     rt_err_t (*pin_irq_enable)(struct rt_device *device, rt_base_t pin, rt_uint32_t enabled);
-    rt_base_t (*pin_get)(const char *name);
+    rt_base_t (*pin_get)(struct rt_device *device, const char *name);
 };
 
 int rt_device_pin_register(const char *name, const struct rt_pin_ops *ops, void *user_data);
