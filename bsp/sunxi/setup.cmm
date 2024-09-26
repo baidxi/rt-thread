@@ -1,4 +1,4 @@
-SYStem.JtagClock 67MHz
+SYStem.JtagClock 65MHz
 SYStem.cpu CortexA7
 SYStem.CONFIG.CTI.Base DAP:0x80050000
 SYStem.CONFIG.COREDEBUG.Base DAP:0x81410000

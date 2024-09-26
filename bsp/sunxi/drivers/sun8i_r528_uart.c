@@ -3,6 +3,7 @@
 #include <rtdevice.h>
 #include <rtconfig.h>
 
+#include "drivers/dev_serial.h"
 #include "sunxi_device.h"
 #include "sunxi_clock.h"
 
@@ -130,34 +131,100 @@ struct serial_device serial_ports[] = {
 #endif
 };
 
+#define FIFO_TRI_EMPTY   0
+#define FIFO_2_CHAR      1
+#define FIFO_1_4_FULL       2
+#define FIFO_1_2_FULL       3
+
+#define HALT_TX         0
+
+#define FIFO_EN         0
+#define FIFO_RX_RESET   1
+#define FIFO_TX_RESET   2
+#define DMA_MODE        3
+
+#define DLS             0
+#define STOP            2
+#define PEN             3
+#define EPS             4
+#define BC              6
+#define DLAB            7
+
+#define FIFO_TX_TRIG_MODE(_x)  (_x << 4)
+#define FIFO_RX_TRIG_MODE(_x)   (_x << 6)
+
+
 static int serial_device_init(struct serial_device *ser_dev, struct serial_configure *cfg)
 {
-    rt_uint32_t val;
+    struct sunxi_serial_reg *reg =(struct sunxi_serial_reg *) ser_dev->base;
+    rt_uint32_t val = 0;
 
     clock_enable(ser_dev->id);
 
     clock_reset(ser_dev->id);
 
-    write32(ser_dev->base + 0x04, 0x0);
-    write32(ser_dev->base + 0x08, 0xf7);
-    write32(ser_dev->base + 0x10, 0x0);
+    val = FIFO_1_2_FULL << 6 | FIFO_1_2_FULL << 4 | 1 << 2 | 1 << 1 |1 << FIFO_EN ;
 
-    val = readl(ser_dev->base + 0x0c);
-    val |= (1 << 7);
+    write32(&reg->fcr, val);
 
-    write32(ser_dev->base + 0x0c, val);
-    write32(ser_dev->base + 0x00, 0xd & 0xff);
-    write32(ser_dev->base + 0x04, (0xd >> 8) & 0xff);
+    write32(&reg->halt, 1 << HALT_TX);
 
-    val = readl(ser_dev->base + 0x0c);
-    val &= ~(1 << 7);
+    val = readl(&reg->lcr);
 
-    write32(ser_dev->base + 0x0c, val);
-    val = readl(ser_dev->base + 0x0c);
-    val &= ~0x1f;
-    val |= (0x3 << 0) | (0x0 << 2) | (0x0 << 3);
+    val |= 1 << DLAB;
 
-    write32(ser_dev->base + 0x0c, val);
+    write32(&reg->lcr, val);
+
+    val = 24000000 / cfg->baud_rate / 16;       /* 24M OSC */
+
+    write32(&reg->dll, val);
+
+    val = readl(&reg->lcr);
+
+    val &= ~(1 << DLAB);
+
+    write32(&reg->lcr, val);
+
+    switch(cfg->stop_bits) {
+        case STOP_BITS_1:
+            val = 0 << STOP;
+            break;
+        case STOP_BITS_2:
+            val = 1 << STOP;
+            break;
+    }
+
+    switch(cfg->data_bits) {
+        case DATA_BITS_5:
+            val |= 0 << DLS;
+            break;
+        case DATA_BITS_6:
+            val |= 1 << DLS;
+            break;
+        case DATA_BITS_7:
+            val |= 2 << DLS;
+            break;
+        case DATA_BITS_8:
+            val |= 3 << DLS;
+            break;
+    }
+
+    switch(cfg->parity) {
+        case PARITY_EVEN:
+            val |= 0 << EPS;
+            break;
+        case PARITY_ODD:
+            val |= 1 << EPS;
+            break;
+    }
+
+    if (cfg->parity != PARITY_NONE) {
+        val |= 1 << PEN;
+    }
+
+    write32(&reg->lcr, val);
+
+    write32(&reg->halt, 0 << HALT_TX);
 
     return 0;
 }
