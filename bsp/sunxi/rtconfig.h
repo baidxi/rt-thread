@@ -6,8 +6,8 @@
 #define RT_NAME_MAX 8
 #define RT_CPUS_NR 1
 #define RT_ALIGN_SIZE 8
-#define RT_THREAD_PRIORITY_256
-#define RT_THREAD_PRIORITY_MAX 256
+#define RT_THREAD_PRIORITY_32
+#define RT_THREAD_PRIORITY_MAX 32
 #define RT_TICK_PER_SECOND 1000
 #define RT_USING_HOOK
 #define RT_HOOK_USING_FUNC_PTR
@@ -44,14 +44,14 @@
 
 #define RT_PAGE_MAX_ORDER 11
 #define RT_USING_MEMPOOL
-#define RT_USING_SLAB
-#define RT_USING_SLAB_AS_HEAP
+#define RT_USING_SMALL_MEM
+#define RT_USING_SMALL_MEM_AS_HEAP
 #define RT_USING_HEAP
 /* end of Memory Management */
 #define RT_USING_DEVICE
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 128
-#define RT_CONSOLE_DEVICE_NAME "uart0"
+#define RT_CONSOLE_DEVICE_NAME "uart1"
 #define RT_VER_NUM 0x50200
 #define RT_BACKTRACE_LEVEL_MAX_NR 32
 /* end of RT-Thread Kernel */
@@ -339,8 +339,14 @@
 
 /* Onboard Peripheral Drivers */
 
+/* Serial device */
+
 #define RT_USING_UART0
-#define RT_USING_UART
+/* end of Serial device */
+
+/* SDHCI Controller */
+
+/* end of SDHCI Controller */
 /* end of Onboard Peripheral Drivers */
 
 /* Hardware Config */

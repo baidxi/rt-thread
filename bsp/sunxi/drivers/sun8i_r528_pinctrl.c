@@ -1,11 +1,11 @@
 #include <rthw.h>
 #include <rtthread.h>
 
-#include "device.h"
-#include "pinctrl.h"
-#include "gpio.h"
+#include "sunxi_device.h"
+#include "sunxi_pinctrl.h"
+#include "sunxi_gpio.h"
 
-void sunxi_pinctrl_init(const struct pinctrl *pinctrl)
+void sunxi_pinctrl_init(const struct sunxi_pinctrl *pinctrl)
 {
     rt_uint32_t cfg_val;
     rt_uint32_t pull_val;

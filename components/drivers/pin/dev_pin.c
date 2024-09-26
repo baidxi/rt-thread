@@ -160,7 +160,7 @@ rt_base_t rt_pin_get(const char *name)
     {
         return -RT_ENOSYS;
     }
-    return _hw_pin.ops->pin_get(name);
+    return _hw_pin.ops->pin_get(&_hw_pin.parent, name);
 }
 
 #ifdef RT_USING_FINSH

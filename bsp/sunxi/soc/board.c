@@ -2,7 +2,6 @@
 #include <rtthread.h>
 
 #include "board.h"
-#include "device.h"
 
 #include <mmu.h>
 

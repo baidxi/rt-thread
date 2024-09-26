@@ -2,7 +2,7 @@ from building import *
 
 cwd  = GetCurrentDir()
 src  = Split('''
-gpio.c
+sunxi_gpio.c
 ''')
 list = os.listdir(cwd)
 CPPPATH = [cwd]
@@ -12,8 +12,11 @@ if GetDepend('SOC_ALLWINNER_R528'):
     src += ['sun8i_r528_pinctrl.c'];
     src += ['sun8i_r528_clock.c'];
     src += ['sun8i_r528_gpio.c'];
-    if GetDepend('RT_USING_UART'):
+    if GetDepend('RT_USING_SERIAL'):
         src += ['sun8i_r528_uart.c']
+
+if GetDepend('RT_USING_SDIO'):
+    src += ['sunxi_sdhci.c']
 
 group = DefineGroup('Drivers', src, depend = [''], CPPPATH = CPPPATH)
 

@@ -133,7 +133,7 @@ struct rt_pin_ops
             rt_uint8_t mode, void (*hdr)(void *args), void *args);
     rt_err_t (*pin_detach_irq)(struct rt_device *device, rt_base_t pin);
     rt_err_t (*pin_irq_enable)(struct rt_device *device, rt_base_t pin, rt_uint8_t enabled);
-    rt_base_t (*pin_get)(const char *name);
+    rt_base_t (*pin_get)(struct rt_device *device, const char *name);
 #ifdef RT_USING_DM
     rt_err_t (*pin_irq_mode)(struct rt_device *device, rt_base_t pin, rt_uint8_t mode);
     rt_ssize_t (*pin_parse)(struct rt_device *device, struct rt_ofw_cell_args *args, rt_uint32_t *flags);
