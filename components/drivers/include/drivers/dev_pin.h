@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2023, RT-Thread Development Team
+ * Copyright (c) 2006-2024 RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,17 +15,17 @@
 #include <rtthread.h>
 
 /**
- * @addtogroup  Drivers          RTTHREAD Driver
- * @defgroup    Pin              Pin
+ * @addtogroup group_Drivers RTTHREAD Driver
+ * @defgroup group_Pin Pin
  *
  * @brief       Pin driver api
- * 
+ *
  * <b>Example</b>
  * @code {.c}
  * #include <rtthread.h>
  * #include <rtdevice.h>
- * 
- * 
+ *
+ *
  * #ifndef BEEP_PIN_NUM
  *     #define BEEP_PIN_NUM            35  // PB0
  * #endif
@@ -35,44 +35,44 @@
  * #ifndef KEY1_PIN_NUM
  *     #define KEY1_PIN_NUM            56  // PD9
  * #endif
- * 
+ *
  * void beep_on(void *args)
  * {
  *     rt_kprintf("turn on beep!\n");
- * 
+ *
  *     rt_pin_write(BEEP_PIN_NUM, PIN_HIGH);
  * }
- * 
+ *
  * void beep_off(void *args)
  * {
  *     rt_kprintf("turn off beep!\n");
- * 
+ *
  *     rt_pin_write(BEEP_PIN_NUM, PIN_LOW);
  * }
- * 
+ *
  * static void pin_beep_sample(void)
  * {
  *     rt_pin_mode(BEEP_PIN_NUM, PIN_MODE_OUTPUT);
  *     rt_pin_write(BEEP_PIN_NUM, PIN_LOW);
- * 
+ *
  *     rt_pin_mode(KEY0_PIN_NUM, PIN_MODE_INPUT_PULLUP);
  *     rt_pin_attach_irq(KEY0_PIN_NUM, PIN_IRQ_MODE_FALLING, beep_on, RT_NULL);
  *     rt_pin_irq_enable(KEY0_PIN_NUM, PIN_IRQ_ENABLE);
- * 
- * 
+ *
+ *
  *     rt_pin_mode(KEY1_PIN_NUM, PIN_MODE_INPUT_PULLUP);
  *     rt_pin_attach_irq(KEY1_PIN_NUM, PIN_IRQ_MODE_FALLING, beep_off, RT_NULL);
  *     rt_pin_irq_enable(KEY1_PIN_NUM, PIN_IRQ_ENABLE);
  * }
- * 
+ *
  * MSH_CMD_EXPORT(pin_beep_sample, pin beep sample);
  * @endcode
- * 
- * @ingroup     Drivers
+ *
+ * @ingroup group_Drivers
  */
 
 /*!
- * @addtogroup Pin
+ * @addtogroup group_Pin
  * @{
  */
 #ifdef __cplusplus
@@ -89,6 +89,8 @@ struct rt_pin_irqchip
     int irq;
     rt_base_t pin_range[2];
 };
+
+struct rt_pin_irq_hdr;
 #endif /* RT_USING_DM */
 
 /**
@@ -98,21 +100,27 @@ struct rt_device_pin
 {
     struct rt_device parent;
 #ifdef RT_USING_DM
+    /* MUST keep the order member after parent */
     struct rt_pin_irqchip irqchip;
+    /* Fill by DM */
+    rt_base_t pin_start;
+    rt_size_t pin_nr;
+    rt_list_t list;
+    struct rt_pin_irq_hdr *legacy_isr;
 #endif /* RT_USING_DM */
     const struct rt_pin_ops *ops;
 };
 
-#define PIN_NONE                (-1)
+#define PIN_NONE                (-RT_EEMPTY)
 
-#define PIN_LOW                 0x00
-#define PIN_HIGH                0x01
+#define PIN_LOW                 0x00 /*!< low level */
+#define PIN_HIGH                0x01 /*!< high level */
 
-#define PIN_MODE_OUTPUT         0x00
-#define PIN_MODE_INPUT          0x01
-#define PIN_MODE_INPUT_PULLUP   0x02
-#define PIN_MODE_INPUT_PULLDOWN 0x03
-#define PIN_MODE_OUTPUT_OD      0x04
+#define PIN_MODE_OUTPUT         0x00 /*!< output mode */
+#define PIN_MODE_INPUT          0x01 /*!< input mode */
+#define PIN_MODE_INPUT_PULLUP   0x02 /*!< input mode with pull-up */
+#define PIN_MODE_INPUT_PULLDOWN 0x03 /*!< input mode with pull-down */
+#define PIN_MODE_OUTPUT_OD      0x04 /*!< output mode with open-drain */
 
 #ifdef RT_USING_PINCTRL
 enum
@@ -147,16 +155,16 @@ enum
 };
 #endif /* RT_USING_PINCTRL */
 
-#define PIN_IRQ_MODE_RISING             0x00
-#define PIN_IRQ_MODE_FALLING            0x01
-#define PIN_IRQ_MODE_RISING_FALLING     0x02
-#define PIN_IRQ_MODE_HIGH_LEVEL         0x03
-#define PIN_IRQ_MODE_LOW_LEVEL          0x04
+#define PIN_IRQ_MODE_RISING             0x00 /*!< rising edge trigger */
+#define PIN_IRQ_MODE_FALLING            0x01 /*!< falling edge trigger */
+#define PIN_IRQ_MODE_RISING_FALLING     0x02 /*!< rising and falling edge trigger */
+#define PIN_IRQ_MODE_HIGH_LEVEL         0x03 /*!< high level trigger */
+#define PIN_IRQ_MODE_LOW_LEVEL          0x04 /*!< low level trigger */
 
-#define PIN_IRQ_DISABLE                 0x00
-#define PIN_IRQ_ENABLE                  0x01
+#define PIN_IRQ_DISABLE                 0x00 /*!< disable irq */
+#define PIN_IRQ_ENABLE                  0x01 /*!< enable irq */
 
-#define PIN_IRQ_PIN_NONE                PIN_NONE
+#define PIN_IRQ_PIN_NONE                PIN_NONE /*!< no pin irq */
 
 /**
  * @brief pin mode structure
@@ -283,6 +291,14 @@ rt_err_t rt_pin_detach_irq(rt_base_t pin);
  * @return rt_err_t error code
  */
 rt_err_t rt_pin_irq_enable(rt_base_t pin, rt_uint8_t enabled);
+
+/**
+ * @brief set the pin's debounce time
+ * @param pin the pin number
+ * @param debounce time
+ * @return rt_err_t error code
+ */
+rt_err_t rt_pin_debounce(rt_base_t pin, rt_uint32_t debounce);
 
 #ifdef RT_USING_DM
 rt_ssize_t rt_pin_get_named_pin(struct rt_device *dev, const char *propname, int index,
