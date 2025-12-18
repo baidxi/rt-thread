@@ -368,9 +368,9 @@
             <vShortWch>1</vShortWch>
             <VariousControls>
               <MiscControls />
-              <Define>PART_TM4C123GH6PM, __RTTHREAD__, rvmdk, __STDC_LIMIT_MACROS, __CLK_TCK=RT_TICK_PER_SECOND, RT_USING_LIBC, RT_USING_ARMLIBC, TARGET_IS_TM4C123_RB1</Define>
+              <Define>PART_TM4C123GH6PM, TARGET_IS_TM4C123_RB1, __CLK_TCK=RT_TICK_PER_SECOND, __STDC_LIMIT_MACROS, RT_USING_ARMLIBC, __RTTHREAD__, RT_USING_LIBC, rvmdk</Define>
               <Undefine />
-              <IncludePath>libraries\Drivers\config;..\..\components\libc\posix\ipc;libraries\TivaWare_C_series\tm4c123_driverlib\driverlib\inc;..\..\components\libc\compilers\common\extension;..\..\components\drivers\include;.;libraries\Drivers;..\..\include;..\..\components\libc\compilers\common\include;..\..\libcpu\arm\common;..\..\components\drivers\include;..\..\components\drivers\include;..\..\components\libc\posix\io\epoll;libraries\TivaWare_C_series\tm4c123_driverlib\driverlib;board;..\..\components\libc\posix\io\eventfd;libraries\TivaWare_C_series\tm4c123_driverlib;..\..\components\libc\posix\io\poll;..\..\components\drivers\include;..\..\libcpu\arm\cortex-m4;..\..\components\finsh;applications;..\..\components\drivers\phy;..\..\components\drivers\include;..\..\components\drivers\include;..\..\components\drivers\smp_call;..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\components\drivers\spi;..\..\components\drivers\include</IncludePath>
+              <IncludePath>..\..\components\libc\posix\ipc;..\..\components\drivers\include;..\..\components\libc\posix\io\eventfd;libraries\TivaWare_C_series\tm4c123_driverlib\driverlib\inc;..\..\components\libc\compilers\common\include;..\..\libcpu\arm\cortex-m4;..\..\components\libc\compilers\common\extension\fcntl\octal;.;..\..\components\drivers\include;..\..\libcpu\arm\common;..\..\components\finsh;..\..\components\drivers\include;..\..\components\drivers\phy;..\..\components\drivers\include;libraries\Drivers\config;libraries\TivaWare_C_series\tm4c123_driverlib\driverlib;..\..\components\drivers\include;..\..\components\libc\posix\io\poll;..\..\components\drivers\smp_call;..\..\components\libc\posix\io\epoll;..\..\components\drivers\spi;..\..\include;libraries\TivaWare_C_series\tm4c123_driverlib;..\..\components\drivers\include;..\..\components\drivers\include;libraries\Drivers;applications;..\..\components\libc\compilers\common\extension;board</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -849,13 +849,6 @@
           <GroupName>Finsh</GroupName>
           <Files>
             <File>
-              <FileName>shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\components\finsh\shell.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>msh.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\finsh\msh.c</FilePath>
@@ -863,9 +856,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>cmd.c</FileName>
+              <FileName>shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\components\finsh\cmd.c</FilePath>
+              <FilePath>..\..\components\finsh\shell.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -873,6 +866,13 @@
               <FileName>msh_parse.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\finsh\msh_parse.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\finsh\cmd.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1168,13 +1168,6 @@
           <GroupName>klibc</GroupName>
           <Files>
             <File>
-              <FileName>kerrno.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\kerrno.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>rt_vsscanf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\klibc\rt_vsscanf.c</FilePath>
@@ -1182,9 +1175,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>kstdio.c</FileName>
+              <FileName>kerrno.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\kstdio.c</FilePath>
+              <FilePath>..\..\src\klibc\kerrno.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1199,6 +1192,13 @@
               <FileName>kstring.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\klibc\kstring.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>kstdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\klibc\kstdio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1237,9 +1237,9 @@
           <GroupName>Libraries</GroupName>
           <Files>
             <File>
-              <FileName>gpio.c</FileName>
+              <FileName>cpu.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\gpio.c</FilePath>
+              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\cpu.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1251,9 +1251,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>cpu.c</FileName>
+              <FileName>fpu.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\cpu.c</FilePath>
+              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\fpu.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1265,13 +1265,6 @@
           </Files>
           <Files>
             <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\systick.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\uart.c</FilePath>
@@ -1279,23 +1272,30 @@
           </Files>
           <Files>
             <File>
-              <FileName>ssi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\ssi.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>fpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\fpu.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>src_adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\adc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\systick.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\gpio.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ssi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\TivaWare_C_series\tm4c123_driverlib\src\ssi.c</FilePath>
             </File>
           </Files>
           <Files>

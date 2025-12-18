@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>RT_USING_LIBC, __STDC_LIMIT_MACROS, __CLK_TCK=RT_TICK_PER_SECOND, RT_USING_ARMLIBC, __RTTHREAD__, FT32F072xB</Define>
+              <Define>FT32F072xB, RT_USING_LIBC, __STDC_LIMIT_MACROS, __RTTHREAD__, __CLK_TCK=RT_TICK_PER_SECOND, RT_USING_ARMLIBC</Define>
               <Undefine />
-              <IncludePath>..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\phy;..\..\..\components\drivers\include;..\libraries\Drivers;..\..\..\components\drivers\include;.;..\libraries\FT32F0xx\FT32F0xx_Driver\Inc;..\..\..\components\finsh;..\libraries\FT32F0xx\FT32F0xx_Driver\templates\Inc;..\..\..\components\drivers\include;board;..\..\..\libcpu\arm\common;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\drivers\include;..\..\..\components\drivers\smp_call;applications;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\poll;..\libraries\FT32F0xx\CMSIS\FT32F0xx\Include;..\..\..\libcpu\arm\cortex-m0;..\..\..\components\libc\posix\ipc;..\..\..\components\libc\compilers\common\extension;..\..\..\components\libc\posix\io\epoll;..\..\..\include;..\..\..\components\libc\compilers\common\include</IncludePath>
+              <IncludePath>..\..\..\components\libc\posix\ipc;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\libcpu\arm\cortex-m0;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\include;..\..\..\components\finsh;..\..\..\components\libc\posix\io\poll;..\..\..\components\drivers\include;..\..\..\components\drivers\smp_call;board;..\libraries\Drivers;..\..\..\components\libc\compilers\common\include;..\..\..\components\drivers\phy;..\..\..\components\libc\compilers\common\extension;..\..\..\components\drivers\include;..\libraries\FT32F0xx\FT32F0xx_Driver\Inc;..\..\..\components\drivers\include;applications;..\libraries\FT32F0xx\FT32F0xx_Driver\templates\Inc;.;..\..\..\include;..\..\..\components\libc\posix\io\epoll;..\..\..\libcpu\arm\common;..\..\..\components\drivers\include;..\libraries\FT32F0xx\CMSIS\FT32F0xx\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1031,6 +1031,20 @@
           <GroupName>klibc</GroupName>
           <Files>
             <File>
+              <FileName>kstring.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\klibc\kstring.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>kerrno.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\klibc\kerrno.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>rt_vsnprintf_tiny.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\klibc\rt_vsnprintf_tiny.c</FilePath>
@@ -1045,23 +1059,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>kerrno.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\kerrno.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>kstdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\klibc\kstdio.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>kstring.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\kstring.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1100,6 +1100,20 @@
           <GroupName>Libraries</GroupName>
           <Files>
             <File>
+              <FileName>ft32f0xx_syscfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_syscfg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ft32f0xx_comp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_comp.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>system_ft32f0xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\FT32F0xx\CMSIS\FT32F0xx\source\system_ft32f0xx.c</FilePath>
@@ -1107,16 +1121,16 @@
           </Files>
           <Files>
             <File>
-              <FileName>ft32f0xx_pwr.c</FileName>
+              <FileName>ft32f0xx_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_pwr.c</FilePath>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_dma.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>ft32f0xx_iwdg.c</FileName>
+              <FileName>ft32f0xx_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_iwdg.c</FilePath>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_gpio.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1135,16 +1149,37 @@
           </Files>
           <Files>
             <File>
-              <FileName>ft32f0xx_gpio.c</FileName>
+              <FileName>ft32f0xx_opa.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_gpio.c</FilePath>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_opa.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>ft32f0xx_comp.c</FileName>
+              <FileName>ft32f0xx_pwr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_comp.c</FilePath>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_pwr.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ft32f0xx_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_rcc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ft32f0xx_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_tim.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ft32f0xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_usart.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1163,9 +1198,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>ft32f0xx_tim.c</FileName>
+              <FileName>ft32f0xx_div.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_tim.c</FilePath>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_div.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1177,44 +1212,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>ft32f0xx_usart.c</FileName>
+              <FileName>ft32f0xx_iwdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_usart.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ft32f0xx_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_dma.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ft32f0xx_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_rcc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ft32f0xx_syscfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_syscfg.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ft32f0xx_div.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_div.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>ft32f0xx_opa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_opa.c</FilePath>
+              <FilePath>..\libraries\FT32F0xx\FT32F0xx_Driver\Src\ft32f0xx_iwdg.c</FilePath>
             </File>
           </Files>
         </Group>

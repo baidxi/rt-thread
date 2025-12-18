@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>__CLK_TCK=RT_TICK_PER_SECOND, N32G4FR, RT_USING_LIBC, USE_STDPERIPH_DRIVER, RT_USING_ARMLIBC, __STDC_LIMIT_MACROS, __RTTHREAD__</Define>
+              <Define>__STDC_LIMIT_MACROS, RT_USING_ARMLIBC, __CLK_TCK=RT_TICK_PER_SECOND, __RTTHREAD__, USE_STDPERIPH_DRIVER, N32G4FR, RT_USING_LIBC</Define>
               <Undefine />
-              <IncludePath>..\libraries\N32G4FR_Firmware_Library\CMSIS;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\include;..\..\..\components\drivers\include;..\..\..\libcpu\arm\common;..\..\..\components\drivers\include;board;..\libraries\n32_drivers;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension;..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\inc;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;..\libraries\N32G4FR_Firmware_Library\CMSIS\core;applications;..\..\..\components\libc\posix\io\epoll;..\..\..\include;..\libraries\N32G4FR_Firmware_Library\CMSIS\device;..\..\..\components\drivers\include;..\..\..\components\drivers\phy;..\..\..\components\drivers\include;..\libraries\n32_drivers\config;..\..\..\components\drivers\include;..\..\..\components\drivers\smp_call;..\..\..\components\libc\posix\ipc;..\..\..\components\libc\posix\io\poll;..\..\..\components\finsh;..\..\..\components\drivers\spi;..\..\..\components\drivers\include;.;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\drivers\include;..\..\..\components\drivers\include</IncludePath>
+              <IncludePath>..\..\..\libcpu\arm\common;..\..\..\components\libc\compilers\common\include;..\..\..\components\drivers\spi;..\..\..\components\drivers\include;..\libraries\N32G4FR_Firmware_Library\CMSIS;..\libraries\n32_drivers;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\poll;..\..\..\components\libc\posix\ipc;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\libraries\n32_drivers\config;..\..\..\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\drivers\include;..\..\..\components\drivers\include;board;..\..\..\components\finsh;..\libraries\N32G4FR_Firmware_Library\CMSIS\device;..\..\..\components\libc\compilers\common\extension;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\smp_call;..\..\..\libcpu\arm\cortex-m4;.;..\..\..\components\libc\posix\io\eventfd;applications;..\..\..\components\drivers\include;..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\inc;..\libraries\N32G4FR_Firmware_Library\CMSIS\core;..\..\..\components\libc\posix\io\epoll;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -970,9 +970,16 @@
           <GroupName>Finsh</GroupName>
           <Files>
             <File>
-              <FileName>msh.c</FileName>
+              <FileName>shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\msh.c</FilePath>
+              <FilePath>..\..\..\components\finsh\shell.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>msh_parse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\finsh\msh_parse.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -984,16 +991,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>shell.c</FileName>
+              <FileName>msh.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\shell.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>msh_parse.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\msh_parse.c</FilePath>
+              <FilePath>..\..\..\components\finsh\msh.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1322,9 +1322,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>kerrno.c</FileName>
+              <FileName>kstring.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\kerrno.c</FilePath>
+              <FilePath>..\..\..\src\klibc\kstring.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1336,9 +1336,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>kstring.c</FileName>
+              <FileName>kerrno.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\kstring.c</FilePath>
+              <FilePath>..\..\..\src\klibc\kerrno.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1384,58 +1384,9 @@
           <GroupName>libraries</GroupName>
           <Files>
             <File>
-              <FileName>n32g4fr_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_exti.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>system_n32g4fr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\CMSIS\device\system_n32g4fr.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>n32g4fr_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_rcc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>n32g4fr_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_i2c.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>misc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\misc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>n32g4fr_dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_dac.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>n32g4fr_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_spi.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>n32g4fr_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_adc.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1447,30 +1398,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>n32g4fr_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_can.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>n32g4fr_iwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_iwdg.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>n32g4fr_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_usart.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>n32g4fr_wwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_wwdg.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1482,9 +1412,79 @@
           </Files>
           <Files>
             <File>
+              <FileName>system_n32g4fr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\CMSIS\device\system_n32g4fr.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_wwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_wwdg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_spi.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_can.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>n32g4fr_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_rtc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_exti.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\misc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_adc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_iwdg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_rcc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>n32g4fr_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\N32G4FR_Firmware_Library\n32g4fr_std_periph_driver\src\n32g4fr_dac.c</FilePath>
             </File>
           </Files>
         </Group>

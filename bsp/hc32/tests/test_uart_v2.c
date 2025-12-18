@@ -20,8 +20,8 @@
  *     输出输入的字符
  *
  * 命令调用格式：
- * uart1 中断，命令调用格式：uart_sample_v1 uart1 int
- * uart1 DMA，命令调用格式：uart_sample_v1 uart1 dma
+ * uart1 中断，命令调用格式：uart_sample_v2 uart1 int
+ * uart1 DMA，命令调用格式：uart_sample_v2 uart1 dma
  *
  * 中断方式，rtconfig.h修改如下
  * #define BSP_USING_GPIO
@@ -76,6 +76,8 @@
     #define SAMPLE_DEFAULT_UART_NAME       "uart1"
 #elif defined(HC32F4A8) && defined (BSP_USING_UART6)
     #define SAMPLE_DEFAULT_UART_NAME       "uart6"
+#elif defined(HC32F334) && defined (BSP_USING_UART1)
+    #define SAMPLE_DEFAULT_UART_NAME       "uart1"
 #endif
 
 #if defined(SAMPLE_DEFAULT_UART_NAME)

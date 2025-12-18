@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>RT_USING_LIBC, rvmdk, __STDC_LIMIT_MACROS, RT_USING_ARMLIBC, __CLK_TCK=RT_TICK_PER_SECOND, __MSP432E401Y__, __RTTHREAD__</Define>
+              <Define>RT_USING_LIBC, __RTTHREAD__, RT_USING_ARMLIBC, __CLK_TCK=RT_TICK_PER_SECOND, __STDC_LIMIT_MACROS, __MSP432E401Y__, rvmdk</Define>
               <Undefine />
-              <IncludePath>..\..\components\drivers\include;..\..\libcpu\arm\common;..\..\libcpu\arm\cortex-m4;..\..\components\libc\posix\io\eventfd;..\..\components\drivers\include;..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\components\drivers\smp_call;libraries\Drivers\CMSIS\Include;..\..\components\libc\posix\io\epoll;libraries\Drivers;..\..\components\drivers\phy;..\..\components\libc\compilers\common\extension;libraries\Drivers\config;libraries\msp432e4\driverlib\inc;libraries\msp432e4\driverlib;..\..\components\finsh;libraries\msp432e4\inc;board;..\..\components\libc\posix\io\poll;..\..\components\drivers\include;..\..\components\drivers\include;..\..\include;..\..\components\drivers\include;..\..\components\libc\posix\ipc;.;applications;..\..\components\libc\compilers\common\include</IncludePath>
+              <IncludePath>..\..\components\finsh;..\..\components\libc\posix\io\epoll;libraries\msp432e4\driverlib;libraries\Drivers\CMSIS\Include;..\..\components\libc\posix\io\poll;..\..\components\drivers\include;applications;..\..\components\drivers\include;libraries\Drivers;..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\include;..\..\components\drivers\include;libraries\Drivers\config;..\..\components\libc\posix\io\eventfd;..\..\components\libc\compilers\common\include;..\..\libcpu\arm\cortex-m4;.;libraries\msp432e4\driverlib\inc;..\..\components\libc\posix\ipc;..\..\components\drivers\include;board;..\..\components\drivers\include;..\..\components\libc\compilers\common\extension;..\..\components\drivers\phy;libraries\msp432e4\inc;..\..\libcpu\arm\common;..\..\components\drivers\smp_call</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -710,16 +710,16 @@
           <GroupName>Finsh</GroupName>
           <Files>
             <File>
-              <FileName>msh_parse.c</FileName>
+              <FileName>cmd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\components\finsh\msh_parse.c</FilePath>
+              <FilePath>..\..\components\finsh\cmd.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>cmd.c</FileName>
+              <FileName>shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\components\finsh\cmd.c</FilePath>
+              <FilePath>..\..\components\finsh\shell.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -731,9 +731,9 @@
           </Files>
           <Files>
             <File>
-              <FileName>shell.c</FileName>
+              <FileName>msh_parse.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\components\finsh\shell.c</FilePath>
+              <FilePath>..\..\components\finsh\msh_parse.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1029,16 +1029,16 @@
           <GroupName>klibc</GroupName>
           <Files>
             <File>
-              <FileName>kstdio.c</FileName>
+              <FileName>rt_vsnprintf_tiny.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\kstdio.c</FilePath>
+              <FilePath>..\..\src\klibc\rt_vsnprintf_tiny.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>rt_vsscanf.c</FileName>
+              <FileName>kstdio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\rt_vsscanf.c</FilePath>
+              <FilePath>..\..\src\klibc\kstdio.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1050,16 +1050,16 @@
           </Files>
           <Files>
             <File>
-              <FileName>rt_vsnprintf_tiny.c</FileName>
+              <FileName>kerrno.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\rt_vsnprintf_tiny.c</FilePath>
+              <FilePath>..\..\src\klibc\kerrno.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>kerrno.c</FileName>
+              <FileName>rt_vsscanf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\kerrno.c</FilePath>
+              <FilePath>..\..\src\klibc\rt_vsscanf.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1112,9 +1112,16 @@
           </Files>
           <Files>
             <File>
-              <FileName>system_msp432e401y.c</FileName>
+              <FileName>interrupt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\msp432e4\startup_system_files\system_msp432e401y.c</FilePath>
+              <FilePath>libraries\msp432e4\driverlib\interrupt.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>cpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\msp432e4\driverlib\cpu.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1126,13 +1133,6 @@
           </Files>
           <Files>
             <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\msp432e4\driverlib\systick.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\msp432e4\driverlib\uart.c</FilePath>
@@ -1140,16 +1140,16 @@
           </Files>
           <Files>
             <File>
-              <FileName>interrupt.c</FileName>
+              <FileName>systick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\msp432e4\driverlib\interrupt.c</FilePath>
+              <FilePath>libraries\msp432e4\driverlib\systick.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>cpu.c</FileName>
+              <FileName>system_msp432e401y.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\msp432e4\driverlib\cpu.c</FilePath>
+              <FilePath>libraries\msp432e4\startup_system_files\system_msp432e401y.c</FilePath>
             </File>
           </Files>
         </Group>

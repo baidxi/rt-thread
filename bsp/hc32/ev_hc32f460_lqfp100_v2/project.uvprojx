@@ -30,7 +30,7 @@
           <SLE66CMisc />
           <SLE66AMisc />
           <SLE66LinkerMisc />
-          <SFDFile>../libraries/hc32f460_ddl/cmsis/Device/HDSC/hc32f4xx/Source/ARM/sfr/HC32F460.SFR</SFDFile>
+          <SFDFile>./packages/hc32-f4-cmsis-latest/Device/HDSC/hc32f460/Source/ARM/sfr/HC32F460.SFR</SFDFile>
           <bCustSvd>1</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath />
@@ -323,7 +323,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
-            <uGnu>0</uGnu>
+            <uGnu>1</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>RT_USING_ARMLIBC, USE_DDL_DRIVER, __STDC_LIMIT_MACROS, HC32F460, __RTTHREAD__, RT_USING_LIBC, __DEBUG, __CLK_TCK=RT_TICK_PER_SECOND</Define>
+              <Define>__RTTHREAD__, HC32F460, RT_USING_ARMLIBC, __CLK_TCK=RT_TICK_PER_SECOND, __DEBUG, USE_DDL_DRIVER, __STDC_LIMIT_MACROS, RT_USING_LIBC</Define>
               <Undefine />
-              <IncludePath>..\..\..\components\drivers\include;applications;board;..\libraries\hc32f460_ddl\cmsis\Device\HDSC\hc32f4xx\Include;..\..\..\components\finsh;board\config;..\..\..\components\libc\compilers\common\extension;..\..\..\components\libc\posix\io\epoll;.;..\tests;board\config\usb_config;..\libraries\hc32f460_ddl\cmsis\Include;..\..\..\components\drivers\smp_call;..\libraries\hc32f460_ddl\hc32_ll_driver\inc;board\ports;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\include;..\..\..\components\libc\posix\ipc;..\..\..\components\drivers\include;..\..\..\libcpu\arm\cortex-m4;..\..\..\include;..\..\..\components\drivers\include;..\libraries\hc32_drivers;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\libc\posix\io\poll;..\..\..\components\drivers\phy;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\libcpu\arm\common</IncludePath>
+              <IncludePath>packages\hc32-f4-cmsis-latest\Device\HDSC\hc32f460\Include;..\..\..\components\libc\posix\ipc;packages\hc32-f4-series-latest\hc32f460\inc;.;..\..\..\include;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;applications;..\tests;board\ports;..\..\..\components\drivers\include;..\..\..\components\finsh;..\..\..\libcpu\arm\common;packages\hc32-f4-cmsis-latest\Include;..\..\..\components\libc\posix\io\poll;..\..\..\components\libc\posix\io\epoll;..\..\..\components\libc\posix\io\eventfd;board\config\usb_config;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;board;..\libraries\hc32_drivers;..\..\..\components\drivers\include;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\smp_call;..\..\..\components\drivers\phy;..\..\..\components\libc\compilers\common\extension;board\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -759,13 +759,6 @@
           </Files>
           <Files>
             <File>
-              <FileName>startup_hc32f460.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\cmsis\Device\HDSC\hc32f4xx\Source\ARM\startup_hc32f460.s</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>drv_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\hc32_drivers\drv_common.c</FilePath>
@@ -811,16 +804,23 @@
           <GroupName>Finsh</GroupName>
           <Files>
             <File>
-              <FileName>msh.c</FileName>
+              <FileName>shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\msh.c</FilePath>
+              <FilePath>..\..\..\components\finsh\shell.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>shell.c</FileName>
+              <FileName>cmd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\shell.c</FilePath>
+              <FilePath>..\..\..\components\finsh\cmd.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>msh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\finsh\msh.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -830,11 +830,189 @@
               <FilePath>..\..\..\components\finsh\msh_parse.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>HC32F460-LL</GroupName>
           <Files>
             <File>
-              <FileName>cmd.c</FileName>
+              <FileName>hc32_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\cmd.c</FilePath>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_usart.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_i2s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_i2s.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_emb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_emb.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_aos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_aos.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_ots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_ots.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_rmu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_rmu.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_utility.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_utility.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_mpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_mpu.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_tmr0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_tmr0.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_gpio.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_keyscan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_keyscan.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_dma.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_icg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_icg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_i2c.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_dbgc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_dbgc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_sram.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_sram.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_clk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_clk.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_interrupts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_interrupts.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_pwc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_pwc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_dcu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_dcu.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_efm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_efm.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_fcg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_fcg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_event_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_event_port.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32f460_ll_interrupts_share.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32f460_ll_interrupts_share.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>hc32_ll_cmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\hc32-f4-series-latest\hc32f460\src\hc32_ll_cmp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1130,13 +1308,6 @@
           <GroupName>klibc</GroupName>
           <Files>
             <File>
-              <FileName>rt_vsnprintf_tiny.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\rt_vsnprintf_tiny.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>kstdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\klibc\kstdio.c</FilePath>
@@ -1151,16 +1322,23 @@
           </Files>
           <Files>
             <File>
-              <FileName>kstring.c</FileName>
+              <FileName>kerrno.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\kstring.c</FilePath>
+              <FilePath>..\..\..\src\klibc\kerrno.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>kerrno.c</FileName>
+              <FileName>rt_vsnprintf_tiny.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\src\klibc\kerrno.c</FilePath>
+              <FilePath>..\..\..\src\klibc\rt_vsnprintf_tiny.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>kstring.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\klibc\kstring.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1206,196 +1384,35 @@
           <GroupName>Libraries</GroupName>
           <Files>
             <File>
-              <FileName>hc32_ll_keyscan.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_keyscan.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_ots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_ots.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_efm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_efm.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_dbgc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_dbgc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_clk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_clk.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_event_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_event_port.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_interrupts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_interrupts.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_sram.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_sram.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_mpu.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_tmr0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_tmr0.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_rmu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_rmu.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>system_hc32f460.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\cmsis\Device\HDSC\hc32f4xx\Source\system_hc32f460.c</FilePath>
+              <FilePath>packages\hc32-f4-cmsis-latest\Device\HDSC\hc32f460\Source\system_hc32f460.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>hc32_ll_pwc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_pwc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_emb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_emb.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_fcg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_fcg.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_dcu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_dcu.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32f460_ll_interrupts_share.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32f460_ll_interrupts_share.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_dma.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_i2c.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_i2s.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_i2s.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_usart.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_icg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_icg.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_aos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_aos.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_gpio.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_utility.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_utility.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>hc32_ll_cmp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\hc32f460_ddl\hc32_ll_driver\src\hc32_ll_cmp.c</FilePath>
+              <FileName>startup_hc32f460.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>packages\hc32-f4-cmsis-latest\Device\HDSC\hc32f460\Source\ARM\startup_hc32f460.s</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Tests</GroupName>
+          <Files>
+            <File>
+              <FileName>test_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\tests\test_gpio.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>test_uart_v1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\tests\test_uart_v1.c</FilePath>
+            </File>
+          </Files>
           <Files>
             <File>
               <FileName>test_i2c.c</FileName>
@@ -1408,20 +1425,6 @@
               <FileName>test_soft_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\tests\test_soft_i2c.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>test_uart_v1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\tests\test_uart_v1.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>test_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\tests\test_gpio.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -3,7 +3,76 @@
 
 /* RT-Thread Kernel */
 
-#define RT_NAME_MAX 8
+/* klibc options */
+
+/* rt_vsnprintf options */
+
+#define RT_KLIBC_USING_VSNPRINTF_LONGLONG
+#define RT_KLIBC_USING_VSNPRINTF_STANDARD
+#define RT_KLIBC_USING_VSNPRINTF_DECIMAL_SPECIFIERS
+#define RT_KLIBC_USING_VSNPRINTF_EXPONENTIAL_SPECIFIERS
+#define RT_KLIBC_USING_VSNPRINTF_WRITEBACK_SPECIFIER
+#define RT_KLIBC_USING_VSNPRINTF_CHECK_NUL_IN_FORMAT_SPECIFIER
+#define RT_KLIBC_USING_VSNPRINTF_INTEGER_BUFFER_SIZE 32
+#define RT_KLIBC_USING_VSNPRINTF_DECIMAL_BUFFER_SIZE 32
+#define RT_KLIBC_USING_VSNPRINTF_FLOAT_PRECISION 6
+#define RT_KLIBC_USING_VSNPRINTF_MAX_INTEGRAL_DIGITS_FOR_DECIMAL 9
+#define RT_KLIBC_USING_VSNPRINTF_LOG10_TAYLOR_TERMS 4
+/* end of rt_vsnprintf options */
+
+/* rt_vsscanf options */
+
+/* end of rt_vsscanf options */
+
+/* rt_memset options */
+
+/* end of rt_memset options */
+
+/* rt_memcpy options */
+
+/* end of rt_memcpy options */
+
+/* rt_memmove options */
+
+/* end of rt_memmove options */
+
+/* rt_memcmp options */
+
+/* end of rt_memcmp options */
+
+/* rt_strstr options */
+
+/* end of rt_strstr options */
+
+/* rt_strcasecmp options */
+
+/* end of rt_strcasecmp options */
+
+/* rt_strncpy options */
+
+/* end of rt_strncpy options */
+
+/* rt_strcpy options */
+
+/* end of rt_strcpy options */
+
+/* rt_strncmp options */
+
+/* end of rt_strncmp options */
+
+/* rt_strcmp options */
+
+/* end of rt_strcmp options */
+
+/* rt_strlen options */
+
+/* end of rt_strlen options */
+
+/* rt_strnlen options */
+
+/* end of rt_strnlen options */
+/* end of klibc options */
+#define RT_NAME_MAX 12
 #define RT_USING_SMART
 #define RT_USING_SMP
 #define RT_CPUS_NR 4
@@ -24,14 +93,9 @@
 #define RT_USING_TIMER_ALL_SOFT
 #define RT_USING_CPU_USAGE_TRACER
 
-/* kservice optimization */
+/* kservice options */
 
-/* end of kservice optimization */
-
-/* klibc optimization */
-
-#define RT_KLIBC_USING_VSNPRINTF_LONGLONG
-/* end of klibc optimization */
+/* end of kservice options */
 #define RT_USING_DEBUG
 #define RT_DEBUGING_COLOR
 
@@ -47,7 +111,6 @@
 
 /* Memory Management */
 
-#define RT_PAGE_MAX_ORDER 11
 #define RT_USING_SLAB
 #define RT_USING_MEMHEAP
 #define RT_MEMHEAP_FAST_MODE
@@ -61,7 +124,7 @@
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 1024
 #define RT_CONSOLE_DEVICE_NAME "uart2"
-#define RT_VER_NUM 0x50200
+#define RT_VER_NUM 0x50201
 #define RT_USING_STDC_ATOMIC
 #define RT_BACKTRACE_LEVEL_MAX_NR 32
 /* end of RT-Thread Kernel */
@@ -85,6 +148,7 @@
 #define ARCH_ARM_MMU
 #define KERNEL_VADDR_START 0xffff000000000000
 #define ARCH_ARMV8
+#define ARCH_USING_ASID
 #define ARCH_USING_HW_THREAD_SELF
 #define ARCH_USING_IRQ_CTX_LIST
 
@@ -118,6 +182,7 @@
 #define RT_USING_DFS_V2
 #define RT_USING_DFS_DEVFS
 #define RT_USING_DFS_PTYFS
+#define RT_USING_DFS_PROCFS
 #define RT_USING_DFS_CROMFS
 #define RT_USING_DFS_TMPFS
 #define RT_USING_DFS_MQUEUE
@@ -146,6 +211,7 @@
 #define RT_USING_SERIAL
 #define RT_USING_SERIAL_V1
 #define RT_SERIAL_RB_BUFSZ 64
+#define RT_USING_SERIAL_BYPASS
 #define RT_USING_NULL
 #define RT_USING_ZERO
 #define RT_USING_RANDOM
@@ -157,6 +223,14 @@
 #define RT_MMCSD_STACK_SIZE 16384
 #define RT_MMCSD_THREAD_PRIORITY 22
 #define RT_MMCSD_MAX_PARTITION 16
+#define RT_USING_BLK
+
+/* Partition Types */
+
+#define RT_BLK_PARTITION_DFS
+#define RT_BLK_PARTITION_EFI
+/* end of Partition Types */
+#define RT_USING_RESET
 #define RT_USING_OFW
 #define RT_FDT_EARLYCON_MSG_SIZE 128
 #define RT_USING_OFW_BUS_RANGES_NUMBER 8
@@ -219,6 +293,7 @@
 
 #define RT_USING_SAL
 #define SAL_INTERNET_CHECK
+#define SOCKET_TABLE_STEP_LEN 4
 
 /* Docking with protocol stacks */
 
@@ -290,6 +365,7 @@
 #define RT_USING_UTEST
 #define UTEST_THR_STACK_SIZE 32768
 #define UTEST_THR_PRIORITY 20
+#define RT_UTEST_MAX_OPTIONS 64
 #define RT_USING_RESOURCE_ID
 #define RT_USING_ADT
 #define RT_USING_ADT_AVL
@@ -297,9 +373,22 @@
 #define RT_USING_ADT_HASHMAP
 #define RT_USING_ADT_REF
 /* end of Utilities */
+
+/* Memory management */
+
+#define RT_PAGE_AFFINITY_BLOCK_SIZE 0x1000
+#define RT_PAGE_MAX_ORDER 11
+#define RT_USING_MEMBLOCK
+#define RT_INIT_MEMORY_REGIONS 128
+
+/* Debugging */
+
+/* end of Debugging */
+/* end of Memory management */
 #define RT_USING_LWP
 #define LWP_DEBUG
 #define LWP_DEBUG_INIT
+#define LWP_USING_RUNTIME
 #define RT_LWP_MAX_NR 128
 #define LWP_TASK_STACK_SIZE 32768
 #define RT_CH_MSG_MAX_NR 1024
@@ -310,12 +399,6 @@
 #define LWP_PTY_MAX_PARIS_LIMIT 64
 #define RT_USING_VDSO
 
-/* Memory management */
-
-#define RT_USING_MEMBLOCK
-#define RT_INIT_MEMORY_REGIONS 128
-/* end of Memory management */
-
 /* Using USB legacy version */
 
 /* end of Using USB legacy version */
@@ -325,33 +408,53 @@
 
 #define RT_USING_UTESTCASES
 
-/* Utest Self Testcase */
-
-/* end of Utest Self Testcase */
-
-/* Kernel Testcase */
+/* Kernel Core */
 
 
-/* Kernel SMP Testcase */
+/* SMP Test */
 
-/* end of Kernel SMP Testcase */
-/* end of Kernel Testcase */
+/* end of SMP Test */
+/* end of Kernel Core */
 
-/* CPP11 Testcase */
+/* Kernel Components */
 
-/* end of CPP11 Testcase */
+/* Drivers */
 
-/* Utest Serial Testcase */
 
-/* end of Utest Serial Testcase */
+/* IPC Test */
 
-/* Utest IPC Testcase */
+/* end of IPC Test */
 
-/* end of Utest IPC Testcase */
+/* Serial Test */
 
-/* RTT Posix Testcase */
+/* end of Serial Test */
 
-/* end of RTT Posix Testcase */
+/* SMP-Call Test */
+
+#define RT_UTEST_SMP_CALL_FUNC
+/* end of SMP-Call Test */
+/* end of Drivers */
+
+/* File System */
+
+/* end of File System */
+
+/* CPP11 */
+
+/* end of CPP11 */
+
+/* LwIP */
+
+/* end of LwIP */
+
+/* Netdev */
+
+/* end of Netdev */
+
+/* Utest Framework */
+
+/* end of Utest Framework */
+/* end of Kernel Components */
 
 /* Memory Management Subsytem Testcase */
 
@@ -360,11 +463,6 @@
 /* Tmpfs Testcase */
 
 /* end of Tmpfs Testcase */
-
-/* SMP-Call Testcase */
-
-#define UTEST_SMP_CALL_FUNC
-/* end of SMP-Call Testcase */
 /* end of RT-Thread Utestcases */
 
 /* RT-Thread online packages */
@@ -457,9 +555,37 @@
 
 /* end of STM32 HAL & SDK Drivers */
 
+/* Infineon HAL Packages */
+
+/* end of Infineon HAL Packages */
+
 /* Kendryte SDK */
 
 /* end of Kendryte SDK */
+
+/* WCH HAL & SDK Drivers */
+
+/* end of WCH HAL & SDK Drivers */
+
+/* AT32 HAL & SDK Drivers */
+
+/* end of AT32 HAL & SDK Drivers */
+
+/* HC32 DDL Drivers */
+
+/* end of HC32 DDL Drivers */
+
+/* NXP HAL & SDK Drivers */
+
+/* end of NXP HAL & SDK Drivers */
+
+/* NUVOTON Drivers */
+
+/* end of NUVOTON Drivers */
+
+/* GD32 Drivers */
+
+/* end of GD32 Drivers */
 /* end of HAL & SDK Drivers */
 
 /* sensors drivers */
@@ -542,25 +668,12 @@
 /* end of Arduino libraries */
 /* end of RT-Thread online packages */
 
-/* Privated Packages of RealThread */
-
-
-/* Network Utilities */
-
-/* end of Network Utilities */
-
-/* RT-Thread Smart */
-
-/* end of RT-Thread Smart */
-/* end of Privated Packages of RealThread */
-
 /* RT-Thread rockchip RK3500 drivers */
 
 #define RT_CLK_ROCKCHIP
 #define RT_CLK_ROCKCHIP_RK3568
 #define RT_CLK_ROCKCHIP_RK3588
 #define RT_SERIAL_8250
-#define RT_USING_RESET
 #define RT_HWTIMER_ROCKCHIP
 /* end of RT-Thread rockchip RK3500 drivers */
 #define SOC_RK3568

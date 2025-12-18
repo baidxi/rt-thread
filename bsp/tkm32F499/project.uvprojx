@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>RT_USING_LIBC, RT_USING_ARMLIBC, __STDC_LIMIT_MACROS, __RTTHREAD__, __CLK_TCK=RT_TICK_PER_SECOND</Define>
+              <Define>__STDC_LIMIT_MACROS, RT_USING_LIBC, RT_USING_ARMLIBC, __CLK_TCK=RT_TICK_PER_SECOND, __RTTHREAD__</Define>
               <Undefine />
-              <IncludePath>..\..\components\libc\compilers\common\extension;..\..\components\drivers\include;.;..\..\components\drivers\include;drivers;Libraries\Hal_lib\inc;..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\components\libc\posix\ipc;..\..\components\drivers\include;..\..\components\drivers\phy;..\..\components\drivers\include;..\..\components\dfs\dfs_v1\include;..\..\libcpu\arm\cortex-m4;Libraries\CMSIS_and_startup;..\..\components\libc\posix\io\eventfd;..\..\components\drivers\include;Libraries\CMSIS_and_startup\CMSIS;..\..\components\libc\posix\io\poll;..\..\components\dfs\dfs_v1\filesystems\devfs;..\..\libcpu\arm\common;drivers\lcd;..\..\components\drivers\smp_call;..\..\include;applications;..\..\components\libc\posix\io\epoll;..\..\components\finsh;..\..\components\libc\compilers\common\include</IncludePath>
+              <IncludePath>..\..\libcpu\arm\common;..\..\components\drivers\include;..\..\components\drivers\include;Libraries\CMSIS_and_startup\CMSIS;..\..\components\drivers\phy;..\..\components\libc\posix\io\epoll;.;..\..\components\finsh;..\..\components\libc\posix\io\eventfd;..\..\components\libc\posix\io\poll;..\..\components\dfs\dfs_v1\filesystems\devfs;drivers;applications;..\..\components\drivers\include;..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\components\drivers\include;drivers\lcd;..\..\libcpu\arm\cortex-m4;..\..\include;..\..\components\drivers\smp_call;..\..\components\dfs\dfs_v1\include;..\..\components\libc\posix\ipc;Libraries\CMSIS_and_startup;..\..\components\libc\compilers\common\extension;..\..\components\libc\compilers\common\include;..\..\components\drivers\include;Libraries\Hal_lib\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -681,6 +681,13 @@
           <GroupName>Drivers</GroupName>
           <Files>
             <File>
+              <FileName>drv_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>drivers\drv_gpio.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>drivers\board.c</FilePath>
@@ -691,13 +698,6 @@
               <FileName>drv_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>drivers\drv_uart.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>drv_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>drivers\drv_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -784,6 +784,13 @@
           <GroupName>Finsh</GroupName>
           <Files>
             <File>
+              <FileName>msh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\finsh\msh.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\finsh\cmd.c</FilePath>
@@ -794,13 +801,6 @@
               <FileName>shell.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\finsh\shell.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>msh.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\components\finsh\msh.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1103,20 +1103,6 @@
           <GroupName>klibc</GroupName>
           <Files>
             <File>
-              <FileName>kerrno.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\kerrno.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>rt_vsscanf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\src\klibc\rt_vsscanf.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
               <FileName>rt_vsnprintf_tiny.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\klibc\rt_vsnprintf_tiny.c</FilePath>
@@ -1134,6 +1120,20 @@
               <FileName>kstring.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\klibc\kstring.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>rt_vsscanf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\klibc\rt_vsscanf.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>kerrno.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\klibc\kerrno.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1172,16 +1172,23 @@
           <GroupName>TKM32_Lib</GroupName>
           <Files>
             <File>
-              <FileName>sys.c</FileName>
+              <FileName>HAL_can.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\CMSIS_and_startup\sys.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_can.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>HAL_dma_bak.c</FileName>
+              <FileName>HAL_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_dma_bak.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_uart.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>HAL_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>Libraries\Hal_lib\src\HAL_exti.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1193,44 +1200,16 @@
           </Files>
           <Files>
             <File>
-              <FileName>HAL_iwdg.c</FileName>
+              <FileName>HAL_wwdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_iwdg.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_wwdg.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>HAL_spi.c</FileName>
+              <FileName>HAL_syscfg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_spi.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>HAL_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_rcc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>HAL_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_can.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>HAL_misc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_misc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>HAL_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_dma.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_syscfg.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1249,30 +1228,23 @@
           </Files>
           <Files>
             <File>
-              <FileName>HAL_exti.c</FileName>
+              <FileName>HAL_dma_bak.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_exti.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_dma_bak.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>HAL_wwdg.c</FileName>
+              <FileName>HAL_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_wwdg.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_spi.c</FilePath>
             </File>
           </Files>
           <Files>
             <File>
-              <FileName>startup_Tk499.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>Libraries\CMSIS_and_startup\startup_Tk499.s</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>HAL_syscfg.c</FileName>
+              <FileName>HAL_rcc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_syscfg.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_rcc.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1284,9 +1256,37 @@
           </Files>
           <Files>
             <File>
-              <FileName>HAL_uart.c</FileName>
+              <FileName>HAL_iwdg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>Libraries\Hal_lib\src\HAL_uart.c</FilePath>
+              <FilePath>Libraries\Hal_lib\src\HAL_iwdg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>Libraries\CMSIS_and_startup\sys.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>HAL_misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>Libraries\Hal_lib\src\HAL_misc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>startup_Tk499.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>Libraries\CMSIS_and_startup\startup_Tk499.s</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>HAL_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>Libraries\Hal_lib\src\HAL_dma.c</FilePath>
             </File>
           </Files>
         </Group>
